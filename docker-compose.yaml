@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  web:
+    image: bettwanze/frost-server-http:1.13.0
+    environment:
+      - serviceRootUrl=http://192.168.1.1:8080/FROST-Server
+      - http_cors_enable=true
+      - http_cors_allowed.origins=*
+      - persistence_db_driver=org.postgresql.Driver
+      - persistence_db_url=jdbc:postgresql://database:5432/sensorthings
+      - persistence_db_username=frost
+      - persistence_db_password=frost
+      - persistence_autoUpdateDatabase=true
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+
+  database:
+    image: bettwanze/postgis:11-2.5
+    volumes:
+      - ./configuration/postgresql/initdb:/docker-entrypoint-initdb.d
+      - postgisdata:/var/lib/postgresql/data
+
+volumes:
+    postgisdata:

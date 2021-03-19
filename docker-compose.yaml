@@ -21,7 +21,7 @@ services:
     image: bettwanze/postgis:11-2.5
     volumes:
       - ./configuration/postgresql/initdb:/docker-entrypoint-initdb.d
-      - postgisdata:/var/lib/postgresql/data
+      - postgisdata:/var/lib/postgresql
 
 volumes:
     postgisdata:
